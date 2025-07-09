@@ -2,6 +2,7 @@ import "antd/dist/reset.css";
 import React, { Component } from "react";
 import { message, Button } from "antd";
 import { ShareAltOutlined } from "@ant-design/icons";
+import Clipboard from "clipboard";
 
 let lastSuccTime = Date.now();
 

@@ -1,6 +1,6 @@
 import "antd/dist/reset.css";
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import { 
   MobileOutlined,  
@@ -17,27 +17,38 @@ class Sider extends Component {
 };
 
   render() {
+    // 定义菜单项
+    const menuItems = [
+      {
+        key: "0",
+        icon: <MobileOutlined />,
+        label: "Native日志"
+      },
+      {
+        key: "1",
+        icon: <GlobalOutlined />,
+        label: "Web日志"
+      }
+    ];
     return (
       <Layout.Sider style={style.sider} trigger={null}>
         <div>
           <div className="sider-logo" style={style.logo} />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]} selectedKeys={this.state.selectedKeys} onClick={this.handleMenuClick}>
-            <Menu.Item key="0">
-              <MobileOutlined />
-              <span>Native日志</span>
-            </Menu.Item>
-            <Menu.Item key="1">
-              <GlobalOutlined />
-              <span>Web日志</span>
-            </Menu.Item>
-          </Menu>
+          <Menu
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={["0"]}
+            selectedKeys={this.state.selectedKeys}
+            onClick={this.handleMenuClick}
+            items={menuItems}
+          />
         </div>
       </Layout.Sider>
     );
   }
 
   componentDidMount() {
-    const {pathname} = this.props;
+    const { pathname } = this.props.location;
     if (pathname === "/native-list" || pathname === "/native-log-detail") {
       this.setState({
         selectedKeys: ["0"]
@@ -59,19 +70,25 @@ class Sider extends Component {
 
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const {pathname} = this.props;
+    const { pathname } = this.props.location;
     if (pathname === "/native-list" || pathname === "/native-log-detail") {
-      this.setState({
-        selectedKeys: ["0"]
-      });
+      if (this.state.selectedKeys[0] !== "0") {
+        this.setState({
+          selectedKeys: ["0"]
+        });
+      }
     } else if (pathname === "/web-list" || pathname === "/web-detail") {
-      this.setState({
-        selectedKeys: ["1"]
-      });
+      if (this.state.selectedKeys[0] !== "1") {
+        this.setState({
+          selectedKeys: ["1"]
+        });
+      }
     } else {
-      this.setState({
-        selectedKeys: ["0"]
-      });
+      if (this.state.selectedKeys[0] !== "0") {
+        this.setState({
+          selectedKeys: ["0"]
+        });
+      }
     }
   }
 
@@ -112,13 +129,9 @@ const style = {
   }
 };
 
-
-function mapStateToProps(state) {
-  return {
-    pathname: state.router.location.pathname,
-    search: state.router.location.search,
-    hash: state.router.location.hash,
-  }
+function SiderWithLocation(props) {
+  const location = useLocation();
+  return <Sider {...props} location={location} />;
 }
 
-export default connect(mapStateToProps)(Sider);
+export default SiderWithLocation;

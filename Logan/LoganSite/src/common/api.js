@@ -13,7 +13,6 @@ const instance = axios.create({
   timeout: API_TIME_OUT,
   withCredentials: true
 });
-console.log("instance", instance)
 
 
 // Native Apis

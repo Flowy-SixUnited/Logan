@@ -47,9 +47,6 @@ importers:
       clipboard:
         specifier: ^2.0.11
         version: 2.0.11
-      connected-react-router:
-        specifier: ^6.9.3
-        version: 6.9.3(history@5.3.0)(react-redux@9.2.0(react@19.1.0)(redux@5.0.1))(react-router@7.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(redux@5.0.1)
       css-loader:
         specifier: 7.1.2
         version: 7.1.2(webpack@5.99.9)
@@ -2889,15 +2886,6 @@ packages:
     resolution: {integrity: sha512-U73+6lQFmfiNPrYbXqr6kZ1i1wiRqXnp2nhMsINseWXO8lDau0LGEffJ8kQi4EjLZympVgRdvqjAgiZ1tgzDDA==}
     engines: {node: '>=0.8'}
 
-  connected-react-router@6.9.3:
-    resolution: {integrity: sha512-4ThxysOiv/R2Dc4Cke1eJwjKwH1Y51VDwlOrOfs1LjpdYOVvCNjNkZDayo7+sx42EeGJPQUNchWkjAIJdXGIOQ==}
-    peerDependencies:
-      history: ^4.7.2
-      react: ^16.4.0 || ^17.0.0
-      react-redux: ^6.0.0 || ^7.1.0
-      react-router: ^4.3.1 || ^5.0.0
-      redux: ^3.6.0 || ^4.0.0
-
   content-disposition@0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
     engines: {node: '>= 0.6'}
@@ -4844,9 +4832,6 @@ packages:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
     deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 
-  lodash.isequalwith@4.4.0:
-    resolution: {integrity: sha512-dcZON0IalGBpRmJBmMkaoV7d3I80R2O+FrzsZyHdNSFrANq/cgDqKQNmAHE8UEj4+QYWwwhkQOVdLHiAopzlsQ==}
-
   lodash.isplainobject@4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
 
@@ -6430,9 +6415,6 @@ packages:
 
   scroll-into-view-if-needed@3.1.0:
     resolution: {integrity: sha512-49oNpRjWRvnU8NyGVmUaYG4jtTkNonFZI86MmGRDqBphEK2EXT9gdEUoQPZhuBM8yWHxCWbobltqYO5M4XrUvQ==}
-
-  seamless-immutable@7.1.4:
-    resolution: {integrity: sha512-XiUO1QP4ki4E2PHegiGAlu6r82o5A+6tRh7IkGGTVg/h+UoeX4nFBeCGPOhb4CYjvkqsfm/TUtvOMYC1xmV30A==}
 
   select-hose@2.0.0:
     resolution: {integrity: sha512-mEugaLK+YfkijB4fx0e6kImuJdCIt2LxCRcbEYPqRGCs4F2ogyfZU5IAZRdjCP8JPq2AtdNoC/Dux63d9Kiryg==}
@@ -10679,19 +10661,6 @@ snapshots:
 
   connect-history-api-fallback@2.0.0: {}
 
-  connected-react-router@6.9.3(history@5.3.0)(react-redux@9.2.0(react@19.1.0)(redux@5.0.1))(react-router@7.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(redux@5.0.1):
-    dependencies:
-      history: 5.3.0
-      lodash.isequalwith: 4.4.0
-      prop-types: 15.8.1
-      react: 19.1.0
-      react-redux: 9.2.0(react@19.1.0)(redux@5.0.1)
-      react-router: 7.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      redux: 5.0.1
-    optionalDependencies:
-      immutable: 4.3.7
-      seamless-immutable: 7.1.4
-
   content-disposition@0.5.4:
     dependencies:
       safe-buffer: 5.2.1
@@ -13204,8 +13173,6 @@ snapshots:
 
   lodash.isequal@4.5.0: {}
 
-  lodash.isequalwith@4.4.0: {}
-
   lodash.isplainobject@4.0.6: {}
 
   lodash.memoize@4.1.2: {}
@@ -14975,9 +14942,6 @@ snapshots:
   scroll-into-view-if-needed@3.1.0:
     dependencies:
       compute-scroll-into-view: 3.1.1
-
-  seamless-immutable@7.1.4:
-    optional: true
 
   select-hose@2.0.0: {}
 

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import {Routes, Route, Navigate} from "react-router-dom";
-import { ConnectedRouter } from 'connected-react-router'
+import {Routes, Route, Navigate, BrowserRouter} from "react-router-dom";
 import {Layout} from "antd";
 import {history} from "./store";
 import NativeList from "./views/native-list";
@@ -19,7 +18,7 @@ class App extends Component {
 
   render() {
     return (
-      <ConnectedRouter history={history}>
+      <BrowserRouter>
         <>
           <Layout style={{height: "100%"}}>
             <Sider/>
@@ -35,7 +34,7 @@ class App extends Component {
             <div>APP</div>
           </Layout>
         </>
-      </ConnectedRouter>
+      </BrowserRouter>
     );
   }
 }

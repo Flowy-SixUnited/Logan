@@ -1,7 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "@redux-devtools/extension";
-import { connectRouter, routerMiddleware } from 'connected-react-router';
-import { createHashHistory } from "history"
 import { thunk } from 'redux-thunk';
 
 import nativeListReducer from "./views/native-list/redux/reducer";
@@ -11,10 +9,7 @@ import webLogDetailReducer from "./views/web-detail/redux/reducer";
 
 const composeEnhancers = composeWithDevTools({});
 
-export const history = createHashHistory();
-
-const createRootReducer = (history) => combineReducers({
-  router: connectRouter(history),
+const rootReducer = combineReducers({
   nativeList: nativeListReducer,
   nativeLogDetail: nativeLogDetailReducer,
   webList: webListReducer,
@@ -22,10 +17,9 @@ const createRootReducer = (history) => combineReducers({
 });
 
 let store = createStore(
-  createRootReducer(history),
+  rootReducer,
   composeEnhancers(
     applyMiddleware(
-      routerMiddleware(history),
       thunk
     )
   )

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Input, Select, DatePicker, Layout, Button, message } from "antd";
+import { Input, Select, DatePicker, Layout, Button, message, Space } from "antd";
 import { 
   CloseCircleOutlined  // 
 } from "@ant-design/icons";
@@ -19,7 +19,10 @@ class HeaderBar extends Component {
     filterConditions: PropTypes.object,
     updateFilterConditions: PropTypes.func,
     fetchTasks: PropTypes.func,
-    type: PropTypes.string
+    type: PropTypes.string,
+    pathname: PropTypes.string,
+    search: PropTypes.string,
+    hash: PropTypes.string
   };
 
   static defaultProps = {
@@ -38,7 +41,7 @@ class HeaderBar extends Component {
     return (
       <Header className="header">
         <div className="tasklist-filterbar-container">
-          <Input.Group compact className="filterbar-group">
+          <Space.Compact className="filterbar-group">
             {
               type === "native" &&
               <Select
@@ -80,7 +83,7 @@ class HeaderBar extends Component {
                 )
               }
             />
-          </Input.Group>
+          </Space.Compact>
           <Button data-test="search-button" icon="search" type="primary" onClick={this.handleSearch}>
             搜索
           </Button>
@@ -161,12 +164,9 @@ class HeaderBar extends Component {
   };
 }
 
-function mapStateToProps(state) {
-  return {
-    pathname: state.router.location.pathname,
-    search: state.router.location.search,
-    hash: state.router.location.hash,
-  };
+function HeaderBarWithLocation(props) {
+  const location = useLocation();
+  return <HeaderBar {...props} pathname={location.pathname} search={location.search} hash={location.hash} />;
 }
 
-export default connect(mapStateToProps)(HeaderBar);
+export default HeaderBarWithLocation;
