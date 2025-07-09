@@ -1,7 +1,8 @@
-import "antd/dist/antd.css";
+import "antd/dist/reset.css";
 import React, { Component } from "react";
-import { message, Button, Icon } from "antd";
-import Clipboard from "clipboard";
+import { message, Button } from "antd";
+import { ShareAltOutlined } from "@ant-design/icons";
+
 let lastSuccTime = Date.now();
 
 class ClickShare extends Component {
@@ -10,18 +11,18 @@ class ClickShare extends Component {
   };
 
   render() {
-    const {buttonId, shareUrl, buttonStyle, icon, buttonText} = this.props;
+    const { buttonId, shareUrl, buttonStyle, icon, buttonText } = this.props;
     const defaultButtonStyle = {
       color: "#fff",
       backgroundColor: "#52c41a"
-    }
+    };
     return (
       <Button
         id={buttonId}
         data-clipboard-text={shareUrl}
-        style={ buttonStyle || defaultButtonStyle }
+        style={buttonStyle || defaultButtonStyle}
       >
-        {icon === false ? "" : <Icon type="share-alt" />}
+        {icon === false ? "" : <ShareAltOutlined />}
         {buttonText}
       </Button>
     );
@@ -35,7 +36,7 @@ class ClickShare extends Component {
         lastSuccTime = Date.now();
       }
     });
-    this.setState(clipboard);
+    this.setState({ clipboard });
   }
 
   componentWillUnmount() {

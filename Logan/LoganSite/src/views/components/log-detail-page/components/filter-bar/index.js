@@ -1,6 +1,14 @@
 import React, { Component } from "react";
-import { Checkbox, Row, Col, Divider, Button, Input, Radio, Icon, Dropdown } from "antd";
-import "antd/dist/antd.css";
+import { Checkbox, Row, Col, Divider, Button, Input, Radio, Dropdown } from "antd";
+import { 
+  CheckSquareOutlined,  
+  CheckCircleOutlined,  
+  ArrowUpOutlined,      
+  ArrowDownOutlined,    
+  CloseCircleOutlined,  
+  SearchOutlined        
+} from "@ant-design/icons";
+import "antd/dist/reset.css";
 import "./style.scss";
 import {nativeLogTypeConfigs, webLogTypeConfigs} from "../../../../../consts/logtypes";
 
@@ -72,11 +80,11 @@ class FilterBar extends Component {
       <RadioGroup className="reverse-type" onChange={this.handleSortedChange} value={sorted}>
         <Radio value={true} name={"升序"} className="reverse-type-item" key={"true"}>
           升序
-          <Icon type="arrow-up" className="reverse-arrow" />
+          <ArrowUpOutlined className="reverse-arrow" />
         </Radio>
         <Radio value={false} name={"降序"} className="reverse-type-item" key={"false"}>
           降序
-          <Icon type="arrow-down" className="reverse-arrow" />
+          <ArrowDownOutlined className="reverse-arrow" />
         </Radio>
       </RadioGroup>
     );
@@ -92,7 +100,7 @@ class FilterBar extends Component {
           }}
         >
           <Button className="filter-log-type">
-            <Icon type="check-square" />
+            <CheckSquareOutlined />
             日志类型
           </Button>
         </Dropdown>
@@ -105,7 +113,7 @@ class FilterBar extends Component {
           }}
         >
           <Button className="filter-log-type">
-            <Icon type="check-circle" />
+            <CheckCircleOutlined />
             {filterConditions.sorted === false ? "排序方式：降序" : "排序方式：升序"}
           </Button>
         </Dropdown>
@@ -117,8 +125,7 @@ class FilterBar extends Component {
             placeholder="查找日志关键字，回车提交"
             prefix={
               this.state.keywordTemp ? (
-                <Icon
-                  type="close-circle-o"
+                <CloseCircleOutlined
                   style={{ color: "rgba(0,0,0,.25)", cursor: "pointer" }}
                   onClick={this.handleKeywordClear}
                 />
@@ -128,8 +135,7 @@ class FilterBar extends Component {
             }
             suffix={
               this.state.keywordTemp ? (
-                <Icon
-                  type="search"
+                <SearchOutlined
                   style={{ color: "rgba(0,0,0,.45)", cursor: "pointer" }}
                   onClick={this.handleKeywordSearchConfirm}
                 />

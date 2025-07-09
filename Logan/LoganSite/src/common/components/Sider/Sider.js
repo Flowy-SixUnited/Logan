@@ -1,7 +1,11 @@
-import "antd/dist/antd.css";
+import "antd/dist/reset.css";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Layout, Menu, Icon } from "antd";
+import { Layout, Menu } from "antd";
+import { 
+  MobileOutlined,  
+  GlobalOutlined    
+} from "@ant-design/icons";
 import { isEqual } from "lodash";
 import image from "./new_logan_logo_white.png";
 import "./style.scss";
@@ -10,7 +14,7 @@ class Sider extends Component {
 
   state = {
     selectedKeys: ["0"]
-  };
+};
 
   render() {
     return (
@@ -19,11 +23,11 @@ class Sider extends Component {
           <div className="sider-logo" style={style.logo} />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]} selectedKeys={this.state.selectedKeys} onClick={this.handleMenuClick}>
             <Menu.Item key="0">
-              <Icon type="mobile" />
+              <MobileOutlined />
               <span>Native日志</span>
             </Menu.Item>
             <Menu.Item key="1">
-              <Icon type="html5" />
+              <GlobalOutlined />
               <span>Web日志</span>
             </Menu.Item>
           </Menu>
@@ -96,7 +100,7 @@ const style = {
     height: "100%"
   },
   logo: {
-    backgroundImage: image,
+    backgroundImage: `url(${image})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     color: "#ffffff",

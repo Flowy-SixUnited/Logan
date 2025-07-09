@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Collapse, Icon } from "antd";
+import { Collapse } from "antd";
+import { AppleOutlined, AndroidOutlined } from "@ant-design/icons";
 import moment from "moment";
 import numeral from "numeral";
-import "antd/dist/antd.css";
+import "antd/dist/reset.css";
 import "./style.scss";
 
 const { Panel } = Collapse;
@@ -68,19 +69,19 @@ class LogInformation extends Component {
     platformNameByPlatformId.set(
       0,
       <span>
-        <Icon type="apple" /> | <Icon type="android" />
+        <AppleOutlined /> | <AndroidOutlined />
       </span>
     );
     platformNameByPlatformId.set(
       1,
       <span>
-        <Icon type="android" />
+        <AndroidOutlined />
       </span>
     );
     platformNameByPlatformId.set(
       2,
       <span>
-        <Icon type="apple" />
+        <AppleOutlined />
       </span>
     );
     return platformNameByPlatformId;

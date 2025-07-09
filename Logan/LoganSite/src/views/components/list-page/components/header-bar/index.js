@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Input, Select, DatePicker, Icon, Layout, Button, message } from "antd";
-import "antd/dist/antd.css";
+import { Input, Select, DatePicker, Layout, Button, message } from "antd";
+import { 
+  CloseCircleOutlined  // 
+} from "@ant-design/icons";
+import "antd/dist/reset.css";
 import "./style.scss";
-import ClickShare from "../../../../../common/components/ClickShare/ClickShare"
+import ClickShare from "../../../../../common/components/ClickShare/ClickShare";
 import moment from "moment";
 
 const { Option } = Select;
@@ -12,7 +15,6 @@ const { RangePicker } = DatePicker;
 const { Header } = Layout;
 
 class HeaderBar extends Component {
-
   static propTypes = {
     filterConditions: PropTypes.object,
     updateFilterConditions: PropTypes.func,
@@ -67,11 +69,10 @@ class HeaderBar extends Component {
               onChange={this.handleDeviceIdChange}
               suffix={
                 filterConditions.deviceId ? (
-                  <Icon
+                  <CloseCircleOutlined  // 
                     data-test="clean-deviceId-icon"
                     className="empty-search"
                     key="empty-search"
-                    type="close-circle"
                     onClick={this.handleCleanDeviceId}
                   />
                 ) : (
@@ -90,11 +91,11 @@ class HeaderBar extends Component {
   }
 
   composeShareUrl = () => {
-    const {filterConditions, type, pathname} = this.props;
+    const { filterConditions, type, pathname } = this.props;
     if (type === "native") {
-      return `${window.location.origin}/#${pathname}?deviceId=${filterConditions.deviceId}&beginTime=${moment(filterConditions.beginTime).valueOf()}&endTime=${moment(filterConditions.endTime).valueOf()}&platform=${filterConditions.platform}`
+      return `${window.location.origin}/#${pathname}?deviceId=${filterConditions.deviceId}&beginTime=${moment(filterConditions.beginTime).valueOf()}&endTime=${moment(filterConditions.endTime).valueOf()}&platform=${filterConditions.platform}`;
     } else {
-      return `${window.location.origin}/#${pathname}?deviceId=${filterConditions.deviceId}&beginTime=${moment(filterConditions.beginTime).valueOf()}&endTime=${moment(filterConditions.endTime).valueOf()}`
+      return `${window.location.origin}/#${pathname}?deviceId=${filterConditions.deviceId}&beginTime=${moment(filterConditions.beginTime).valueOf()}&endTime=${moment(filterConditions.endTime).valueOf()}`;
     }
   };
 
@@ -117,14 +118,12 @@ class HeaderBar extends Component {
         deviceId: filterConditions.deviceId,
         beginTime: moment(filterConditions.beginTime).valueOf(),
         endTime: moment(filterConditions.endTime).valueOf()
-      })
+      });
     }
-
   };
 
   handleDeviceIdChange = e => {
     const { filterConditions, updateFilterConditions } = this.props;
-
     updateFilterConditions({
       ...filterConditions,
       deviceId: e.target.value
@@ -133,7 +132,6 @@ class HeaderBar extends Component {
 
   handleCleanDeviceId = () => {
     const { filterConditions, updateFilterConditions } = this.props;
-
     updateFilterConditions({
       ...filterConditions,
       deviceId: ""
@@ -142,7 +140,6 @@ class HeaderBar extends Component {
 
   handlePlatformChange = value => {
     const { filterConditions, updateFilterConditions } = this.props;
-
     updateFilterConditions({
       ...filterConditions,
       platform: value
@@ -152,7 +149,6 @@ class HeaderBar extends Component {
   handleTimeRangeChange = value => {
     const { filterConditions, updateFilterConditions } = this.props;
     const [beginMoment, endMoment] = value;
-
     if (endMoment.diff(beginMoment) >= 7 * 86400000) {
       message.warn("请保证选择的时间范围不超过7天");
       return;
@@ -162,7 +158,6 @@ class HeaderBar extends Component {
       beginTime: beginMoment.valueOf(),
       endTime: endMoment.valueOf()
     });
-
   };
 }
 
@@ -171,7 +166,7 @@ function mapStateToProps(state) {
     pathname: state.router.location.pathname,
     search: state.router.location.search,
     hash: state.router.location.hash,
-  }
+  };
 }
 
 export default connect(mapStateToProps)(HeaderBar);

@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import {Timeline, Divider, Spin, Icon} from "antd";
+import {Timeline, Divider, Spin} from "antd";
+import { CaretUpOutlined } from "@ant-design/icons";
 import {isEqual, findIndex} from "lodash";
 import InfiniteScroll from "react-infinite-scroller";
 import {LOG_MOVE_DISTANCE, LAST_LOAD_MIN_SPAN} from "./consts";
@@ -118,7 +119,7 @@ class LogListInfiniteScroll extends Component {
               <div className="log-uploading-trigger" onClick={() => {
                 this.loadMore("up");
               }}>
-                <Icon type="caret-up"/>
+                <CaretUpOutlined />
               </div>
             </div>
           )}

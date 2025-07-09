@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { composeWithDevTools } from "@redux-devtools/extension";
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createHashHistory } from "history"
-import thunk from "redux-thunk";
+import { thunk } from 'redux-thunk';
 
 import nativeListReducer from "./views/native-list/redux/reducer";
 import nativeLogDetailReducer from "./views/native-log-detail/redux/reducer";

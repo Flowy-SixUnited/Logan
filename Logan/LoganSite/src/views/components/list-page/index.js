@@ -1,7 +1,11 @@
 import React, { Component } from "react";
-import { Table, Icon, Button } from "antd";
+import { Table, Button } from "antd";
+import { 
+  AndroidOutlined,
+  AppleOutlined   
+} from "@ant-design/icons";
 import moment from "moment";
-import "antd/dist/antd.css";
+import "antd/dist/reset.css";
 import "./style.scss";
 import HeaderBar from "./components/header-bar/index";
 
@@ -11,17 +15,17 @@ const ICON_BY_PLATFORM = {
   "-1": <span>Unknown</span>,
   "0": (
     <span>
-      <Icon type="android" /> | <Icon type="apple" />
+      <AndroidOutlined /> | <AppleOutlined />
     </span>
   ),
   "1": (
     <span>
-      <Icon type="android" />
+      <AndroidOutlined />
     </span>
   ),
   "2": (
     <span>
-      <Icon type="apple" />
+      <AppleOutlined />
     </span>
   )
 };
@@ -114,7 +118,7 @@ class ListPage extends Component {
     if (type === "native") {
       return <Button onClick={this.toDetail(record.taskId)}>日志详情</Button>;
     } else {
-      return <Button onClick={this.toDetail(record.tasks)}>日志详情</Button>;
+      return <Button onClick={this.toDetail(record.tasks)}>日志详情</Button>;  // ❌ 这里可能是 bug，应该是 record.taskId
     }
   };
 

@@ -1,7 +1,9 @@
 import axios from "axios";
 import { message } from 'antd';
 
-const BASE_URL = process.defineEnv.API_BASE_URL;
+// const BASE_URL = process.defineEnv.API_BASE_URL;
+const BASE_URL = "http://localhost:8888/logan-web/";
+console.log("BASE_URL", BASE_URL)
 const API_TIME_OUT = 30000;
 let pendingRequests = [];
 
@@ -11,6 +13,7 @@ const instance = axios.create({
   timeout: API_TIME_OUT,
   withCredentials: true
 });
+console.log("instance", instance)
 
 
 // Native Apis
