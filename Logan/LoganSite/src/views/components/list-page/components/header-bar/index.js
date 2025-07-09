@@ -3,7 +3,8 @@ import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Input, Select, DatePicker, Layout, Button, message, Space } from "antd";
 import { 
-  CloseCircleOutlined  // 
+  CloseCircleOutlined,
+  SearchOutlined
 } from "@ant-design/icons";
 import "antd/dist/reset.css";
 import "./style.scss";
@@ -84,7 +85,7 @@ class HeaderBar extends Component {
               }
             />
           </Space.Compact>
-          <Button data-test="search-button" icon="search" type="primary" onClick={this.handleSearch}>
+          <Button data-test="search-button" icon={<SearchOutlined />} type="primary" onClick={this.handleSearch}>
             搜索
           </Button>
         </div>
@@ -96,9 +97,9 @@ class HeaderBar extends Component {
   composeShareUrl = () => {
     const { filterConditions, type, pathname } = this.props;
     if (type === "native") {
-      return `${window.location.origin}/#${pathname}?deviceId=${filterConditions.deviceId}&beginTime=${moment(filterConditions.beginTime).valueOf()}&endTime=${moment(filterConditions.endTime).valueOf()}&platform=${filterConditions.platform}`;
+      return `${window.location.origin}${pathname}?deviceId=${filterConditions.deviceId}&beginTime=${moment(filterConditions.beginTime).valueOf()}&endTime=${moment(filterConditions.endTime).valueOf()}&platform=${filterConditions.platform}`;
     } else {
-      return `${window.location.origin}/#${pathname}?deviceId=${filterConditions.deviceId}&beginTime=${moment(filterConditions.beginTime).valueOf()}&endTime=${moment(filterConditions.endTime).valueOf()}`;
+      return `${window.location.origin}${pathname}?deviceId=${filterConditions.deviceId}&beginTime=${moment(filterConditions.beginTime).valueOf()}&endTime=${moment(filterConditions.endTime).valueOf()}`;
     }
   };
 

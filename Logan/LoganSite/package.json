@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@babel/preset-react": "^7.27.1",
     "@svgr/webpack": "8.1.0",
     "@typescript-eslint/eslint-plugin": "^8.36.0",

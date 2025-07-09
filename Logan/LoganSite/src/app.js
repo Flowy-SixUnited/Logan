@@ -31,7 +31,7 @@ class App extends Component {
                 <Route path="/web-detail" element={<WebLogDetail />} />
               </Routes>
             </div>
-            <div>APP</div>
+            {/* <div>APP</div>   */}
           </Layout>
         </>
       </BrowserRouter>

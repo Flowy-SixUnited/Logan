@@ -41,7 +41,7 @@ class ListPage extends Component {
           fetchTasks={fetchTasks}
           type={type}
         />
-        <div className={"table-container"}>
+        <div className={"table-container"} style={{width: "calc(100% - 20px)"}}>
             {
               (() => {
                 if (type === "native") {
@@ -59,15 +59,15 @@ class ListPage extends Component {
   renderNativeColumns = (tasks, loading) => {
     return (
       <Table size="middle" dataSource={tasks} loading={loading} pagination={false} scroll={{y: 650}} rowKey="taskId">
-        <Column title="任务id" dataIndex="taskId" key="taskId" width="10%" />
-        <Column title="AppId" dataIndex="appId" key="appId" width="10%"/>
-        <Column title="AppVersion" dataIndex="appVersion" key="appVersion" width="10%"/>
-        <Column title="设备标识" dataIndex="deviceId" key="deviceId" width="15%" />
-        <Column title="unionId" dataIndex="unionId" key="unionId" width="15%" />
-        <Column title="设备平台" dataIndex="platform" key="platform" width="10%" render={this.renderColumnPlatform} />
-        <Column title="日志当天时间" dataIndex="logDate" key="logDate" width="10%" render={this.renderColumnLogDate} />
-        <Column title="日志上报时间" dataIndex="addTime" key="addTime" width="10%" render={this.renderColumnAddTime} />
-        <Column title="操作" dataIndex="action" width="10%" render={this.renderColumnAction} />
+        <Column title="任务id" dataIndex="taskId" key="taskId" />
+        <Column title="AppId" dataIndex="appId" key="appId"/>
+        <Column title="AppVersion" dataIndex="appVersion" key="appVersion"/>
+        <Column title="设备标识" dataIndex="deviceId" key="deviceId" />
+        <Column title="unionId" dataIndex="unionId" key="unionId" />
+        <Column title="设备平台" dataIndex="platform" key="platform" render={this.renderColumnPlatform} />
+        <Column title="日志当天时间" dataIndex="logDate" key="logDate" render={this.renderColumnLogDate} />
+        <Column title="日志上报时间" dataIndex="addTime" key="addTime" render={this.renderColumnAddTime} />
+        <Column title="操作" dataIndex="action" render={this.renderColumnAction} />
       </Table>
     );
   };

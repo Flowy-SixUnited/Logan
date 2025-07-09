@@ -1,6 +1,6 @@
 import "antd/dist/reset.css";
 import React, { Component } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import { 
   MobileOutlined,  
@@ -94,17 +94,17 @@ class Sider extends Component {
 
   handleMenuClick = ({ key }) => {
     if (key === "0") {
-      window.location.hash = "#/native-list";
+      this.props.navigate("/native-list");
       this.setState({
         selectedKeys: ["0"]
       });
     } else if (key === "1") {
-      window.location.hash ="#/web-list";
+      this.props.navigate("/web-list");
       this.setState({
         selectedKeys: ["1"]
       });
     } else {
-      window.location.hash = "#/native-list";
+      this.props.navigate("/native-list");
       this.setState({
         selectedKeys: ["0"]
       });
@@ -131,7 +131,8 @@ const style = {
 
 function SiderWithLocation(props) {
   const location = useLocation();
-  return <Sider {...props} location={location} />;
+  const navigate = useNavigate();
+  return <Sider {...props} location={location} navigate={navigate} />;
 }
 
 export default SiderWithLocation;
