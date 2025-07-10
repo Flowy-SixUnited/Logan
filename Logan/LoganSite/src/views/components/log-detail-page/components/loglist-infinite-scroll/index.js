@@ -128,7 +128,7 @@ class LogListInfiniteScroll extends Component {
             style={{
               backgroundColor: item.id === focusLogId ? "#e6f7ff" : "transparent"
             }}
-            className={style && style["timeline-item"]}
+            className="timeline-item"
             id={"log-item-row-" + index}
             key={"log-item-row-" + item.id}
             onClick={e => {
@@ -137,19 +137,19 @@ class LogListInfiniteScroll extends Component {
               updateFocusLogId(item.id);
             }}
           >
-            <div className={style && style["log-time-title"]}>
-              <div className={style && style["log-time-title-left"]}>
-                <div className={style && style["log-type"]} style={{color: logType.displayColor}}>
+            <div className="log-time-title">
+              <div className="log-time-title-left">
+                <div className="log-type" style={{color: logType.displayColor}}>
                   {logType.logTypeName}:
                 </div>
-                <div className={style && style["log-time"]}>{moment(item.logTime).format("HH:mm:ss.SSS")}</div>
+                <div className="log-time">{moment(item.logTime).format("HH:mm:ss.SSS")}</div>
               </div>
-              <div className={style && style["log-time-title-right"]}>
-                <div className={style && style["log-id"]}>日志ID：{item.id}</div>
+              <div className="log-time-title-right">
+                <div className="log-id">日志ID：{item.id}</div>
               </div>
             </div>
-            <div className={style && style["log-content"]}>
-              <div className={style && style["log-abbr"]}>{item.simpleContent || item.content}</div>
+            <div className="log-content">
+              <div className="log-abbr">{item.simpleContent || item.content}</div>
             </div>
           </div>
         )

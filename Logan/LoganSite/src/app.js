@@ -29,6 +29,7 @@ class App extends Component {
                 <Route path="/native-log-detail" element={<NativeLogDetail />} />
                 <Route path="/web-list" element={<WebList />} />
                 <Route path="/web-detail" element={<WebLogDetail />} />
+                {/* <Route path="/logan/downing" element={<DowningComponent />} /> */}
               </Routes>
             </div>
             {/* <div>APP</div>   */}

@@ -23,76 +23,100 @@ class FilterBar extends Component {
     keywordTemp: ""
   };
 
-  render() {
-    const { filterConditions, logTypesInTask, type, sorted } = this.props;
+  // 生成日志类型菜单项
+  getLogTypeMenuItems = () => {
+    const { filterConditions, logTypesInTask, type } = this.props;
     const LOGTYPES_CONFIG = type === "native" ? nativeLogTypeConfigs : webLogTypeConfigs;
-    const LogTypeMultiCheck = (
-      <div>
-        <Checkbox.Group
-          onChange={this.handleLogTypesChanged}
-          className="log-type-checkbox"
-          value={
-            filterConditions.logTypes.length === logTypesInTask.length
-              ? ["all", ...filterConditions.logTypes]
-              : filterConditions.logTypes
-          }
-          selectable={"true"}
-        >
-          <Row>
-            <Col>
-              <Checkbox value="all">全选</Checkbox>
-            </Col>
-          </Row>
-          <Divider style={{ margin: "8px 0 5px" }} />
-          {logTypesInTask.map(logType => {
-            const config = LOGTYPES_CONFIG.find(item => item.logType === logType);
-            if (config === undefined) {
-              return (
-                <Row key={logType} className="log-type-checkitem">
-                  <Col>
-                    <Checkbox value={logType}>
-                      <div className="check-item-wrapper">
-                        <span style={{ color: "#000000" }}>未知类型</span>
-                      </div>
-                    </Checkbox>
-                  </Col>
-                </Row>
-              );
-            } else {
-              return (
-                <Row key={config.logType} className="log-type-checkitem">
-                  <Col>
-                    <Checkbox value={config.logType}>
-                      <div className="check-item-wrapper">
-                        <span style={{color: config.displayColor}}>{config.logTypeName}</span>
-                      </div>
-                    </Checkbox>
-                  </Col>
-                </Row>
-              );
-            }
-          })}
-        </Checkbox.Group>
-      </div>
-    );
+    const checked = filterConditions.logTypes;
+    const allChecked = checked.length === logTypesInTask.length;
 
-    const sortedMultiCheck = (
-      <RadioGroup className="reverse-type" onChange={this.handleSortedChange} value={sorted}>
-        <Radio value={true} name={"升序"} className="reverse-type-item" key={"true"}>
-          升序
-          <ArrowUpOutlined className="reverse-arrow" />
-        </Radio>
-        <Radio value={false} name={"降序"} className="reverse-type-item" key={"false"}>
-          降序
-          <ArrowDownOutlined className="reverse-arrow" />
-        </Radio>
-      </RadioGroup>
-    );
+    // “全选”项
+    const items = [
+      {
+        key: "all",
+        label: (
+          <Checkbox
+            checked={allChecked}
+            onChange={() => {
+              this.handleLogTypesChanged(
+                allChecked ? [] : logTypesInTask
+              );
+            }}
+          >
+            全选
+          </Checkbox>
+        )
+      },
+      { type: "divider" }
+    ];
+
+    // 具体类型项
+    logTypesInTask.forEach(logType => {
+      const config = LOGTYPES_CONFIG.find(item => item.logType === logType);
+      items.push({
+        key: String(logType),
+        label: (
+          <Checkbox
+            checked={checked.includes(logType)}
+            onChange={() => {
+              let newChecked;
+              if (checked.includes(logType)) {
+                newChecked = checked.filter(i => i !== logType);
+              } else {
+                newChecked = [...checked, logType];
+              }
+              this.handleLogTypesChanged(newChecked);
+            }}
+          >
+            <span style={{ color: config ? config.displayColor : "#000" }}>
+              {config ? config.logTypeName : "未知类型"}
+            </span>
+          </Checkbox>
+        )
+      });
+    });
+
+    return items;
+  };
+
+  // 生成排序菜单项
+  getSortedMenuItems = () => {
+    const { sorted } = this.props;
+    return [
+      {
+        key: "asc",
+        label: (
+          <div
+            className="reverse-type-item"
+            style={{ color: sorted ? "#1677ff" : undefined }}
+            onClick={() => this.handleSortedChange(true)}
+          >
+            升序 <ArrowUpOutlined className="reverse-arrow" />
+          </div>
+        )
+      },
+      {
+        key: "desc",
+        label: (
+          <div
+            className="reverse-type-item"
+            style={{ color: !sorted ? "#1677ff" : undefined }}
+            onClick={() => this.handleSortedChange(false)}
+          >
+            降序 <ArrowDownOutlined className="reverse-arrow" />
+          </div>
+        )
+      }
+    ];
+  };
+
+  render() {
+    const { filterConditions } = this.props;
 
     return (
       <div className="filterbar-container">
         <Dropdown
-          menu={LogTypeMultiCheck}
+          menu={{ items: this.getLogTypeMenuItems() }}
           trigger={["click"]}
           open={this.state.logTypeDropdownVisible}
           onOpenChange={flag => {
@@ -105,7 +129,7 @@ class FilterBar extends Component {
           </Button>
         </Dropdown>
         <Dropdown
-          menu={sortedMultiCheck}
+          menu={{ items: this.getSortedMenuItems() }}
           trigger={["click"]}
           open={this.state.sortedDropdownVisible}
           onOpenChange={flag => {
@@ -153,35 +177,17 @@ class FilterBar extends Component {
   }
 
   handleLogTypesChanged = checkedItems => {
-    const { filterConditions, onFilterConditionChanged, logTypesInTask } = this.props;
-    const previousLogTypes = filterConditions.logTypes;
-    let result = [];
-    if (checkedItems.includes("all")) {
-      // 之前是全选，现在单取消某项
-      if (previousLogTypes.length === logTypesInTask.length) {
-        result = checkedItems.filter(value => {
-          return value !== "all"; // checkedItems中要过滤掉'all'这个选项
-        });
-      } else {
-        // 之前不是全选
-        result = logTypesInTask;
-      }
-    } else if (previousLogTypes.length === logTypesInTask.length) {
-      result = [];
-    } else {
-      result = checkedItems;
-    }
-
+    const { filterConditions, onFilterConditionChanged } = this.props;
     onFilterConditionChanged({
       ...filterConditions,
-      logTypes: result
+      logTypes: checkedItems
     });
   };
 
-  handleSortedChange = e => {
+  handleSortedChange = value => {
     const { onSortedChanged, rollingListManually } = this.props;
     this.setState({ sortedDropdownVisible: false });
-    onSortedChanged(e.target.value);
+    onSortedChanged(value);
     rollingListManually(0);
   };
 
