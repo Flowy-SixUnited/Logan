@@ -3,6 +3,7 @@ import { Card, Button } from "antd";
 import moment from "moment";
 import "./style.scss";
 import {nativeLogTypeConfigs, webLogTypeConfigs} from "../../../../../consts/logtypes";
+import { CloseOutlined } from "@ant-design/icons";
 
 const titleByKey = {
   "id": "日志编号",
@@ -51,7 +52,7 @@ class LogDetailCard extends Component {
       );
 
       const closeButton = (
-        <Button icon="close" shape="circle" size="small" onClick={this.handleCloseButtonClicked}/>
+        <Button icon={<CloseOutlined />} shape="circle" size="small" onClick={this.handleCloseButtonClicked}/>
       );
 
       const metaDatas = Object.keys(logDetail).map(key => {

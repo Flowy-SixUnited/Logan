@@ -25,7 +25,7 @@ export class WebList extends Component {
 
     const { deviceId, beginTime, endTime } = params;
     if (some([deviceId, beginTime, endTime], item => item === void 0) && !every([deviceId, beginTime, endTime], item => item === void 0)) {
-      message.warn("url参数错误！获取默认日志列表")
+      message.warning("url参数错误！获取默认日志列表")
     }
     
     updateFilterConditions({

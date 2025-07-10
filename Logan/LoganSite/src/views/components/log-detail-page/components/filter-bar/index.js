@@ -92,10 +92,10 @@ class FilterBar extends Component {
     return (
       <div className="filterbar-container">
         <Dropdown
-          overlay={LogTypeMultiCheck}
+          menu={LogTypeMultiCheck}
           trigger={["click"]}
-          visible={this.state.logTypeDropdownVisible}
-          onVisibleChange={flag => {
+          open={this.state.logTypeDropdownVisible}
+          onOpenChange={flag => {
             this.setState({ logTypeDropdownVisible: flag });
           }}
         >
@@ -105,10 +105,10 @@ class FilterBar extends Component {
           </Button>
         </Dropdown>
         <Dropdown
-          overlay={sortedMultiCheck}
+          menu={sortedMultiCheck}
           trigger={["click"]}
-          visible={this.state.sortedDropdownVisible}
-          onVisibleChange={flag => {
+          open={this.state.sortedDropdownVisible}
+          onOpenChange={flag => {
             this.setState({ sortedDropdownVisible: flag });
           }}
         >

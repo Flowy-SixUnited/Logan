@@ -14,6 +14,7 @@ import {
 
 import LogDetailPage from "../components/log-detail-page/index";
 import {message} from "antd";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export function mapStateToProps(state) {
   return {
@@ -64,7 +65,13 @@ export class NativeLogDetail extends Component{
   }
 }
 
+function NativeLogDetailWrapper(props) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  return <NativeLogDetail {...props} navigate={navigate} location={location} />;
+}
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NativeLogDetail);
+)(NativeLogDetailWrapper);

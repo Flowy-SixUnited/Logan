@@ -7,7 +7,7 @@ import {LOG_MOVE_DISTANCE, LAST_LOAD_MIN_SPAN} from "./consts";
 import {nativeLogTypeConfigs, webLogTypeConfigs} from "../../../../../consts/logtypes";
 import {NUMBER_OF_LOG_IN_SINGLE_PAGE} from "../../../../../consts/pagination"
 import moment from "moment";
-import style from "./style.module.scss";
+import "./style.scss";
 
 class LogListInfiniteScroll extends Component {
   constructor(props) {
@@ -110,9 +110,54 @@ class LogListInfiniteScroll extends Component {
   render() {
     const {data, focusLogId, type, updateFocusLogId} = this.props;
     const {upHasMore, downHasMore, mouseUpRolling} = this.state;
+    // 生成 items 数组，替代 TimelineItem
+    const LogTypes = type === "native" ? nativeLogTypeConfigs : webLogTypeConfigs;
+    const items = data.map((item, index) => {
+      let logType = LogTypes.find(type => type.logType === item.logType);
+      if (logType === undefined) {
+        logType = {
+          logType: 0,
+          logTypeName: "未知日志",
+          displayColor: "#000000"
+        };
+      }
+      return {
+        color: logType.displayColor,
+        children: (
+          <div
+            style={{
+              backgroundColor: item.id === focusLogId ? "#e6f7ff" : "transparent"
+            }}
+            className={style && style["timeline-item"]}
+            id={"log-item-row-" + index}
+            key={"log-item-row-" + item.id}
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              updateFocusLogId(item.id);
+            }}
+          >
+            <div className={style && style["log-time-title"]}>
+              <div className={style && style["log-time-title-left"]}>
+                <div className={style && style["log-type"]} style={{color: logType.displayColor}}>
+                  {logType.logTypeName}:
+                </div>
+                <div className={style && style["log-time"]}>{moment(item.logTime).format("HH:mm:ss.SSS")}</div>
+              </div>
+              <div className={style && style["log-time-title-right"]}>
+                <div className={style && style["log-id"]}>日志ID：{item.id}</div>
+              </div>
+            </div>
+            <div className={style && style["log-content"]}>
+              <div className={style && style["log-abbr"]}>{item.simpleContent || item.content}</div>
+            </div>
+          </div>
+        )
+      };
+    });
     return (
-      <div className={style["inifinite-scroll-container"]}>
-        <div className={style["container-inner"]} id="infinite-container-inner">
+      <div className="infinite-scroll-container">
+        <div className="container-inner" id="infinite-container-inner">
           {mouseUpRolling && !upHasMore && <Divider className="bottom-line">顶部</Divider>}
           {upHasMore && (
             <div className="log-uploading-top">
@@ -134,20 +179,9 @@ class LogListInfiniteScroll extends Component {
             useWindow={false}
             isReverse={mouseUpRolling}
             threshold={250}
-            className={style["scroll-content"]}
+            className="scroll-content"
           >
-            <Timeline style={{marginTop: "20px"}}>
-              {data.map((item, index) => (
-                <TimelineItem
-                  item={item}
-                  index={index}
-                  focusLogId={focusLogId}
-                  type={type}
-                  updateFocusLogId={updateFocusLogId}
-                  key={`${item.id}-${index}`}
-                />
-              ))}
-            </Timeline>
+            <Timeline style={{marginTop: "20px"}} items={items} />
           </InfiniteScroll>
 
           {this.state.downloading && (
@@ -288,51 +322,3 @@ class LogListInfiniteScroll extends Component {
 }
 
 export default LogListInfiniteScroll;
-
-/// 以下全为辅助组件
-function TimelineItem({item, index, focusLogId, type, updateFocusLogId}) {
-  const LogTypes = type === "native" ? nativeLogTypeConfigs : webLogTypeConfigs;
-  let logType = LogTypes.find(type => type.logType === item.logType);
-  if (logType === undefined) {
-    logType = {
-      logType: 0,
-      logTypeName: "未知日志",
-      displayColor: "#000000"
-    };
-  }
-  return (
-    <Timeline.Item
-      className={style["timeline-item"]}
-      id={"log-item-row-" + index}
-      color={logType.displayColor}
-      key={"log-item-row-" + item.id}
-      onClick={e => {
-        e.preventDefault();
-        e.stopPropagation();
-        updateFocusLogId(item.id);
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: item.id === focusLogId ? "#e6f7ff" : "transparent"
-        }}
-      >
-        <div className={style["log-time-title"]}>
-          <div className={style["log-time-title-left"]}>
-            <div className={style["log-type"]} style={{color: logType.displayColor}}>
-              {logType.logTypeName}:
-            </div>
-            <div className={style["log-time"]}>{moment(item.logTime).format("HH:mm:ss.SSS")}</div>
-          </div>
-          <div className={style["log-time-title-right"]}>
-            <div className={style["log-id"]}>日志ID：{item.id}</div>
-          </div>
-        </div>
-        <div className={style["log-content"]}>
-          <div className={style["log-abbr"]}>{item.simpleContent || item.content}</div>
-        </div>
-      </div>
-    </Timeline.Item>
-  );
-
-}

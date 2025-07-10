@@ -154,7 +154,7 @@ class HeaderBar extends Component {
     const { filterConditions, updateFilterConditions } = this.props;
     const [beginMoment, endMoment] = value;
     if (endMoment.diff(beginMoment) >= 7 * 86400000) {
-      message.warn("请保证选择的时间范围不超过7天");
+      message.warning("请保证选择的时间范围不超过7天");
       return;
     }
     updateFilterConditions({

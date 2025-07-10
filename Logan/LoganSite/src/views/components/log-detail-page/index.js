@@ -12,8 +12,8 @@ import {NUMBER_OF_LOG_IN_SINGLE_PAGE} from "../../../consts/pagination"
 import "./style.scss";
 import {LOG_MOVE_DISTANCE} from "./components/loglist-infinite-scroll/consts";
 import {fetchNativeDownloadUrlApi, fetchWebDownloadUrlApi} from "../../../common/api";
-
-
+import { LeftOutlined, DownloadOutlined } from "@ant-design/icons";
+// 移除 useNavigate，类组件通过 props 传递 navigate
 
 class LogDetailPage extends Component {
 
@@ -42,9 +42,9 @@ class LogDetailPage extends Component {
     return (
       <div className="logdetail-container">
         <div className="header">
-          <Button icon="left" onClick={this.handleBackToListButtonClicked}>返回列表</Button>
+          <Button icon={<LeftOutlined />} onClick={this.handleBackToListButtonClicked}>返回列表</Button>
           <LogInformation logInfo={logInfo} type={type}/>
-          <Button icon="download" onClick={this.handleLogDownloadButtonClicked}>日志文件下载</Button>
+          <Button icon={<DownloadOutlined />} onClick={this.handleLogDownloadButtonClicked}>日志文件下载</Button>
         </div>
         <div className="content">
           <FilterBar
@@ -104,20 +104,20 @@ class LogDetailPage extends Component {
   };
 
   handleBackToListButtonClicked = () => {
-    const { type, history, nativeListFilterConditions, webListFilterConditions } = this.props;
+    const { type, nativeListFilterConditions, webListFilterConditions, navigate } = this.props;
     if (type === "native") {
       const { deviceId, platform, beginTime, endTime } = nativeListFilterConditions;
       if (((!isEmpty(deviceId) && !isNil(deviceId)) && !isNil(platform) && !isNil(beginTime) && !isNil(endTime))) {
-        history.push(`/native-list?deviceId=${deviceId}&beginTime=${beginTime}&endTime=${endTime}&platform=${platform}`)
+        navigate(`/native-list?deviceId=${deviceId}&beginTime=${beginTime}&endTime=${endTime}&platform=${platform}`)
       } else {
-        history.push("/native-list")
+        navigate("/native-list");
       }
     } else {      
       const { deviceId, beginTime, endTime } = webListFilterConditions;
       if (((!isEmpty(deviceId) && !isNil(deviceId)) && !isNil(beginTime) && !isNil(endTime))) {
-        history.push(`/web-list?deviceId=${deviceId}&beginTime=${beginTime}&endTime=${endTime}`)
+        navigate(`/web-list?deviceId=${deviceId}&beginTime=${beginTime}&endTime=${endTime}`)
       } else {
-        history.push("/web-list")
+        navigate("/web-list");
       }
     }
   }

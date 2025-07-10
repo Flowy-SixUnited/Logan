@@ -8,6 +8,7 @@ import moment from "moment";
 import "antd/dist/reset.css";
 import "./style.scss";
 import HeaderBar from "./components/header-bar/index";
+import { useNavigate } from "react-router-dom";
 
 const { Column } = Table;
 
@@ -123,9 +124,14 @@ class ListPage extends Component {
   };
 
   toDetail = tasks => () => {
-    const {detailUrlPrefix} = this.props;
-    this.props.history.push(`${detailUrlPrefix}?tasks=${tasks}`);
+    const { detailUrlPrefix, navigate } = this.props;
+    this.props.navigate(`${detailUrlPrefix}?tasks=${tasks}`);
   };
 }
 
-export default ListPage;
+function ListPageWrapper(props) {
+  const navigate = useNavigate();
+  return <ListPage {...props} navigate={navigate} />;
+}
+
+export default ListPageWrapper;
