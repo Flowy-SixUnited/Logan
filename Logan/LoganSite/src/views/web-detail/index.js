@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { parse } from "qs";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import {
   fetchPageInitData,
@@ -13,7 +14,7 @@ import {
 } from "./redux/action";
 
 import LogDetailPage from "../components/log-detail-page/index";
-import {message} from "antd";
+import { message } from "antd";
 
 export function mapStateToProps(state) {
   return {
@@ -34,16 +35,15 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-
-export class WebLogDetail extends Component{
-
+export class WebLogDetail extends Component {
   componentDidCatch(error, errorInfo) {
     message.error("页面异常！");
-    this.props.history.replace("/");
+    if (this.props.navigate) {
+      this.props.navigate("/");
+    }
   }
 
   componentDidMount() {
-
     const { initState } = this.props;
     initState();
 
@@ -66,7 +66,16 @@ export class WebLogDetail extends Component{
   }
 }
 
-export default connect(
+const ConnectedWebLogDetail = connect(
   mapStateToProps,
   mapDispatchToProps
 )(WebLogDetail);
+
+// 关键：用 hooks 包裹，传递 navigate/location
+export default function WebLogDetailWrapper(props) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  return (
+    <ConnectedWebLogDetail {...props} navigate={navigate} location={location} />
+  );
+}
