@@ -550,7 +550,23 @@ module.exports = function(webpackEnv) {
           basedir: paths.appNodeModules,
         }),
         async: isEnvDevelopment,
-        typescript: { configFile: paths.appTsConfig }
+        useTypescriptIncrementalApi: true,
+        checkSyntacticErrors: true,
+        resolveModuleNameModule: process.versions.pnp
+          ? `${__dirname}/pnpTs.js`
+          : undefined,
+        resolveTypeReferenceDirectiveModule: process.versions.pnp
+          ? `${__dirname}/pnpTs.js`
+          : undefined,
+        tsconfig: paths.appTsConfig,
+        reportFiles: [
+          '**',
+          '!**/__tests__/**',
+          '!**/?(*.)(spec|test).*',
+          '!**/src/setupProxy.*',
+          '!**/src/setupTests.*',
+        ],
+        silent: true,
       }),
     ].filter(Boolean),
     // Turn off performance processing because we utilize
