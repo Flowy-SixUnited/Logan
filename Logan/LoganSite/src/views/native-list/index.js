@@ -4,17 +4,18 @@ import { every, some } from "lodash";
 import { parse } from "qs";
 import moment from "moment";
 import ListPage from "../components/list-page/index";
-import { updateFilterConditions, fetchTasks, fetchInitData } from "./redux/nativeListSlice";
+import { updateFilterConditions, fetchTasks, fetchInitData } from "./redux/action";
 import {message} from "antd";
+
 
 export class NativeList extends Component {
 
   componentDidCatch(error, errorInfo) {
     message.error("页面异常！");
-    if (this.props.history && this.props.history.replace) {
+
       this.props.history.replace("/");
     }
-  }
+
 
   componentDidMount() {
     const { updateFilterConditions, fetchTasks, fetchInitData } = this.props;
